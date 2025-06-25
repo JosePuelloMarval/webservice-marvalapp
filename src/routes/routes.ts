@@ -1,17 +1,15 @@
 import { Router } from "express";
 
-import { loginHandler, signUpHandler } from "../controllers/authController";
+import { loginHandler } from "../controllers/authController/authController";
 import { requireAuth } from "../middlewares/requireAuth";
-import Usuario from "../routes/usuario/UsuariosRoutes";
-import Producto from "../routes/producto/ProductoRoutes";
+import Usuario from "./user/UserRoutes";
+import RealState from "./realstate/RealStateRoutes";
 
 const router = Router()
 
 router.post('/login', loginHandler);
-router.post('/signup', signUpHandler);
 
 router.use("/users", requireAuth, Usuario);
-
-// router.use("/products",requireAuth, Producto);
+router.use("/projets",requireAuth, RealState);
 
 export default router;
