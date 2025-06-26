@@ -1,4 +1,5 @@
 import express from 'express';
+import morgan from 'morgan';
 import cors from 'cors';
 import userRoutes from "./routes/routes";
 
@@ -10,6 +11,7 @@ app.use(cors({
     credentials: true
 }));
 
+app.use(morgan('dev'));
 app.use(express.json())
 
 app.get("/", (req, res) => {

@@ -9,7 +9,7 @@ const router = Router()
 
 router.post('/login', loginHandler);
 
-router.use("/users", requireAuth, Usuario);
-router.use("/projets",requireAuth, RealState);
+router.use("/users", Usuario);
+router.use("/projects", RealState);
 
 export default router;

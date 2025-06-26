@@ -28,9 +28,9 @@ export const loginHandler = async (
 
         const user = await AppDataSource.getRepository(User)
             .createQueryBuilder()
-            .innerJoin("User.rol", "roles")
+            .innerJoin("User.role", "roles")
             .addSelect('User.password')
-            .addSelect('roles.nombre')
+            .addSelect('roles.role')
             .where("User.email = :email", { email: email })
             .getOne();
 

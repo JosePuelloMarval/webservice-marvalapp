@@ -5,7 +5,7 @@ import { User } from "../../entities/User";
 export const allUsers = async (req: Request, res: Response): Promise<void> => {
     try {
         const users = await AppDataSource.getRepository(User).find({
-            relations: ['rol', 'profile'],
+            relations: ['role', 'profile'],
         })
         users.length ?
             res.json(users) :

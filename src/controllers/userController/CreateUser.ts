@@ -3,12 +3,13 @@ import { AppDataSource } from "../../db";
 import { User } from "../../entities/User";
 import bcrypt from "bcrypt";
 import { validateEmail, validatePassword } from "../validatorController/validator";
+import { Role } from "../../entities/Rol";
 
 export const createUser = async (req: Request, res: Response): Promise<void> => {
     try {
         const { name, lastname, email, rol, password } = req.body;
         if (!name || !lastname || !email || !rol || !password ) {
-            res.status(400).json({ error: "Bad request, missing data" })
+            res.status(400).json({ error: "Bad request, missing data - create project" })
             return;
         }
         const userBody = await User.findOne({
@@ -22,6 +23,11 @@ export const createUser = async (req: Request, res: Response): Promise<void> => 
             res.status(400).json({ message: "Password is not valid" });
             return;
         }
+        const role = await Role.findOne({ where: { role: rol } });
+        if (!role) {
+            res.status(400).json({ message: `No existe el rol: ${rol}` });
+            return;
+        }
         const hashPassword = await bcrypt.hash(password, 10);
         if (!userBody) {
             const userRepository = AppDataSource.getRepository(User);
@@ -29,8 +35,8 @@ export const createUser = async (req: Request, res: Response): Promise<void> => 
             user.name = name
             user.lastname = lastname
             user.email = email
+            user.role = role
             user.password = hashPassword
-            user.role = rol
             const createUser = await userRepository.save(user);
             res.status(201).json({ id: createUser.id });
             return;

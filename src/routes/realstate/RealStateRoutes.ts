@@ -6,7 +6,7 @@ import { createRealState } from "../../controllers/realStateController/CreateRea
 
 const router = Router()
 
-router.get("/all-projets", allRealState);
+router.get("/all-projects", allRealState);
 router.post("/create-project", createRealState);
 
 export default router;
