@@ -1,17 +1,16 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, BaseEntity, OneToOne, JoinColumn} from 'typeorm';
-import * as bcrypt from "bcrypt";
-import { Role } from './Rol';
-import { Profile } from './Profile';
+import { Entity, ObjectIdColumn, Column, BaseEntity } from 'typeorm';
+import { ObjectId } from 'mongodb';
+
 
 @Entity('users')
 export class User extends BaseEntity {
-    @PrimaryGeneratedColumn('uuid')
-    id!: string;
+    @ObjectIdColumn()
+    id!: ObjectId;
 
-    @Column({ nullable: false })
+    @Column()
     name!: string;
 
-    @Column({ nullable: false})
+    @Column()
     lastname!: string;
 
     @Column({ select: false })
@@ -20,9 +19,11 @@ export class User extends BaseEntity {
     @Column({ unique: true })
     email!: string;
 
-    @ManyToOne(() => Role, (role) => role.users, { nullable: true, onDelete: 'SET NULL', cascade: true })
-    role!: Role;
+    // En lugar de @ManyToOne, guardamos el ID del rol
+    @Column({ nullable: true })
+    roleId?: ObjectId;
 
-    @OneToOne(() => Profile, (profile) => profile.user, { cascade: true })
-    profile!: Profile;
+    // En lugar de @OneToOne, guardamos el ID del perfil
+    @Column({ nullable: true })
+    profileId?: ObjectId;
 }

@@ -4,6 +4,7 @@ import { User } from "../../entities/User";
 import bcrypt from "bcrypt";
 import { validateEmail, validatePassword } from "../validatorController/validator";
 import { Role } from "../../entities/Rol";
+import { ObjectId } from "mongodb";
 
 export const createUser = async (req: Request, res: Response): Promise<void> => {
     try {
@@ -35,7 +36,7 @@ export const createUser = async (req: Request, res: Response): Promise<void> => 
             user.name = name
             user.lastname = lastname
             user.email = email
-            user.role = role
+            user.roleId = role._id
             user.password = hashPassword
             const createUser = await userRepository.save(user);
             res.status(201).json({ id: createUser.id });

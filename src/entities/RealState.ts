@@ -1,32 +1,32 @@
-import { Entity, PrimaryGeneratedColumn, Column, BaseEntity} from 'typeorm';
-// import { Categoria } from './Categoria';
+import { Entity, ObjectIdColumn, Column, BaseEntity } from 'typeorm';
+import { ObjectId } from 'mongodb';
 
 @Entity('realstate')
 export class RealState extends BaseEntity {
-    @PrimaryGeneratedColumn('uuid')
-    id!: string;
+    @ObjectIdColumn()
+    id!: ObjectId;
 
-    @Column('int',{ nullable: false })
+    @Column()
     hc!: number;
 
-    @Column('varchar',{ nullable: false })
+    @Column()
     name!: string;
 
-    @Column('text',{ nullable: false })
+    @Column()
     location!: string;
 
-    @Column('decimal',{ nullable: false })
-    price!: string;
+    @Column()
+    price!: number; // si quieres usar decimales, MongoDB los trata como "number"
 
-    @Column('int',{ nullable: false })
+    @Column()
     bathrooms!: number;
 
-    @Column('decimal',{ nullable: false })
+    @Column()
     area!: number;
 
-    @Column('varchar', { nullable: false})
+    @Column()
     description!: string;
 
     @Column({ nullable: true })
-    imagen_url!: string;
+    imagen_url?: string;
 }

@@ -1,13 +1,13 @@
 import { Request, Response } from "express";
 import { AppDataSource } from "../../db";
 import { User } from "../../entities/User";
+import { ObjectId } from "mongodb";
 
 export const getUserById = async (req: Request, res: Response): Promise<void> => {
     try {
         const { id } = req.params;
-        const user = await AppDataSource.getRepository(User).findOne({
-            where: { id: id },
-            relations: ['rol', 'profile']
+        const user = await AppDataSource.getRepository(User).findOneBy({
+           id : new ObjectId(id)
         })
         res.json(user);
         return;

@@ -1,14 +1,16 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany, BaseEntity } from 'typeorm';
-import { User } from './User';
+import { Entity, ObjectIdColumn, Column, BaseEntity } from 'typeorm';
+import { ObjectId } from 'mongodb';
+
 
 @Entity('roles')
 export class Role extends BaseEntity {
-  @PrimaryGeneratedColumn('uuid')
-  id!: string;
+  @ObjectIdColumn()
+  _id!: ObjectId;
 
   @Column({ unique: true })
   role!: string;
 
-  @OneToMany(() => User, (user) => user.role)
-  users!: User[];
+  // Si necesitas guardar los usuarios asociados:
+  @Column({ nullable: true })
+  userIds?: ObjectId[];
 }

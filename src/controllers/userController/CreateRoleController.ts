@@ -19,7 +19,7 @@ export const createRole = async (req: Request, res: Response): Promise<void> => 
             const role = new Role()
             role.role = rol
             const createRole = await roleRepository.save(role);
-            res.status(201).json({ id: createRole.id });
+            res.status(201).json({ id: createRole._id });
             return;
         }
         res.status(500).json({ message: "Ya existe un role con este nombre" })
