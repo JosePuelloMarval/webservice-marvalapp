@@ -12,5 +12,5 @@ export const AppDataSource = new DataSource({
     useUnifiedTopology: true,
     synchronize: true,
     logging: false,
-    entities: ["src/entities/*.ts"],
+    entities: [__dirname + "/entities/*.{ts,js}"],
 }); 
