@@ -16,9 +16,6 @@ const SECRET_KEY = process.env.SECRET_KEY || "secret";
 export const loginHandler = async (req: Request, res: Response): Promise<void> => {
     try {
         const { email, password } = req.body;
-
-        console.log(email, password);
-
         if (!validateEmail(email)) {
             res.status(400).json({ message: "Email is not valid" });
             return;
