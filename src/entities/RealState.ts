@@ -13,16 +13,22 @@ export class RealState extends BaseEntity {
     name!: string;
 
     @Column()
-    location!: string;
+    slug!: string;
 
     @Column()
-    price!: number; // si quieres usar decimales, MongoDB los trata como "number"
+    address!: string;
+
+    @Column()
+    price_from_general!: number; 
 
     @Column()
     bathrooms!: number;
+    
+    @Column()
+    rooms!: number;
 
     @Column()
-    area!: number;
+    built_area!: number;
 
     @Column()
     description!: string;

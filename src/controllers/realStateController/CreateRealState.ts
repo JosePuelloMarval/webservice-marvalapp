@@ -4,8 +4,8 @@ import { RealState } from "../../entities/RealState";
 
 export const createRealState = async (req: Request, res: Response): Promise<void> => {
     try {
-        const { hc, name, location, price, bathrooms, area, description, imagen_url } = req.body;
-        if ( !hc || !name || !location || !price || !bathrooms || !area || !description || !imagen_url ) {
+        const { hc, name, slug, address, price_from_general, bathrooms, rooms, built_area, description, imagen_url } = req.body;
+        if ( !hc || !name || !slug || !address || !price_from_general || !bathrooms || rooms || !built_area || !description || !imagen_url ) {
             res.status(400).json({ error: "Bad request, missing data" })
             return;
         }
@@ -16,11 +16,14 @@ export const createRealState = async (req: Request, res: Response): Promise<void
         if (!realBody) {
             const realRepository = AppDataSource.getRepository(RealState);
             const real = new RealState()
-            real.name = name
             real.hc = hc
-            real.location = location
-            real.price = price
+            real.name = name
+            real.slug = slug
+            real.address = address
+            real.price_from_general = price_from_general
             real.bathrooms = bathrooms
+            real.rooms = rooms
+            real.built_area = built_area
             real.description = description
             real.imagen_url = imagen_url
             const createReal = await realRepository.save(real);
