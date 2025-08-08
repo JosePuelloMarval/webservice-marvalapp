@@ -14,6 +14,11 @@ export const requireAuth = (req: Request, res: Response, next: NextFunction): vo
             return;
         }
 
+        if (!authHeader.startsWith("Marval-App ")) {
+            res.status(401).json({ message: "Unauthorized" });
+            return;
+        }
+
         const token = authHeader.split(' ')[1];
         if (!token) {
             res.status(401).json({ message: "Unauthorized" });
@@ -24,7 +29,6 @@ export const requireAuth = (req: Request, res: Response, next: NextFunction): vo
                 res.status(401).json({ message: "Unauthorized" });
                 return;
             }
-            console.log(user);
             req.body.user = user
             next()
         })
