@@ -12,8 +12,8 @@ const router = Router()
 router.post('/login', loginHandler);
 
 router.use("/users", Usuario);
-router.use("/projects", RealState);
-router.use("/account-status", AccountStatus);
-router.use("/pqr", PqrRoutes);
+router.use("/projects", RealState, requireAuth);
+router.use("/account-status", AccountStatus, requireAuth);
+router.use("/pqr", PqrRoutes, requireAuth);
 
 export default router;
