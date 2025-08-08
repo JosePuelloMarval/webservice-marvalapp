@@ -4,7 +4,7 @@ import { ObjectId } from 'mongodb';
 @Entity('realstate')
 export class RealState extends BaseEntity {
     @ObjectIdColumn()
-    id!: ObjectId;
+    _id!: ObjectId;
 
     @Column()
     hc!: number;

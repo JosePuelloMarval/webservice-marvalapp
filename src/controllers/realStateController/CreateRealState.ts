@@ -27,7 +27,7 @@ export const createRealState = async (req: Request, res: Response): Promise<void
             real.description = description
             real.imagen_url = imagen_url
             const createReal = await realRepository.save(real);
-            res.status(201).json({ id: createReal.id });
+            res.status(201).json({ id: createReal._id });
             return;
         }
         res.status(500).json({ message: "Ya existe un proyecto inmobiliario con este hc" })
