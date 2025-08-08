@@ -4,9 +4,8 @@ import { ObjectId } from 'mongodb';
 @Entity('profile')
 export class Profile extends BaseEntity {
     @ObjectIdColumn()
-    id!: ObjectId;
+    _id!: ObjectId;
 
-    // Guardamos solo el ID del usuario como referencia manual
     @Column()
     userId!: ObjectId;
 

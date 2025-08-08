@@ -7,7 +7,7 @@ export const getUserById = async (req: Request, res: Response): Promise<void> =>
     try {
         const { id } = req.params;
         const user = await AppDataSource.getRepository(User).findOneBy({
-           id : new ObjectId(id)
+           _id : new ObjectId(id)
         })
         res.json(user);
         return;

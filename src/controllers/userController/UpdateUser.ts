@@ -11,7 +11,7 @@ export const updateUser = async (req: Request, res: Response): Promise<void> => 
         const { name, lastname, email, password, rol } = req.body;
 
         const user = await AppDataSource.getRepository(User).findOneBy({
-            id: new ObjectId(id)
+            _id: new ObjectId(id)
         });
 
         if (!user) {

@@ -50,12 +50,12 @@ export const loginHandler = async (req: Request, res: Response): Promise<void> =
         }
 
         // 🔐 Generar token
-        const token = jwt.sign({ id: user.id, email: user.email }, SECRET_KEY, { expiresIn: 60 * 60 * 24 });
+        const token = jwt.sign({ id: user._id, email: user.email }, SECRET_KEY, { expiresIn: 60 * 60 * 24 });
 
         res.json({
             token,
             user: {
-                id: user.id,
+                id: user._id,
                 name: user.name,
                 lastname: user.lastname,
                 email: user.email,

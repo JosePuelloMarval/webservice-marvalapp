@@ -39,7 +39,7 @@ export const createUser = async (req: Request, res: Response): Promise<void> => 
             user.roleId = role._id
             user.password = hashPassword
             const createUser = await userRepository.save(user);
-            res.status(201).json({ id: createUser.id });
+            res.status(201).json({ id: createUser._id });
             return;
         }
         res.status(500).json({ message: "Ya existe un usuario con este correo" })
