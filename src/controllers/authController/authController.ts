@@ -43,13 +43,11 @@ export const loginHandler = async (req: Request, res: Response): Promise<void> =
             return;
         }
 
-        // 🔍 Obtener rol del usuario
         let role: Role | null = null;
         if (user.roleId) {
             role = await AppDataSource.getRepository(Role).findOneBy({ _id: new ObjectId(user.roleId) });
         }
 
-        // 🔐 Generar token
         const token = jwt.sign({ id: user._id, email: user.email }, SECRET_KEY, { expiresIn: 60 * 60 * 24 });
 
         res.json({

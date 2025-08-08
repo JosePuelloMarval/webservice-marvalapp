@@ -8,7 +8,6 @@ const SECRET_KEY = process.env.SECRET_KEY || "secret";
 export const requireAuth = (req: Request, res: Response, next: NextFunction): void => {
     try {
         const authHeader = req.headers.authorization;
-        console.log( authHeader);
 
         if (!authHeader) {
             res.status(401).json({ message: "Unauthorized" });
@@ -16,7 +15,6 @@ export const requireAuth = (req: Request, res: Response, next: NextFunction): vo
         }
 
         const token = authHeader.split(' ')[1];
-        console.log(token);
         if (!token) {
             res.status(401).json({ message: "Unauthorized" });
             return;
