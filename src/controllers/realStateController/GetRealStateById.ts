@@ -11,6 +11,8 @@ export const getRealStateById = async (req: Request, res: Response): Promise<voi
             id: new ObjectId(id)
         });
 
+        console.log(realState, " aca esta el proyecto")
+
         if (!realState) {
             res.status(404).json({ message: "Proyecto inmobiliario no encontrado" });
             return;
