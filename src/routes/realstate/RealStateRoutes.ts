@@ -7,8 +7,8 @@ import { requireAuth } from "../../middlewares/requireAuth";
 
 const router = Router()
 
-router.get("/all-projects", allRealState, requireAuth);
-router.post("/create-project", createRealState, requireAuth);
-router.get("/get-project-by-id/:id", getRealStateById, requireAuth);
+router.get("/all-projects", requireAuth, allRealState);
+router.post("/create-project", requireAuth, createRealState);
+router.get("/get-project-by-id/:id", requireAuth, getRealStateById);
 
 export default router;

@@ -8,8 +8,8 @@ import { requireAuth } from "../../middlewares/requireAuth";
 
 const router = Router()
 
-router.get("/get-pqr-by-id/:id", getPqrById, requireAuth);
-router.post("/create-pqr", createPqrHistorySummary, requireAuth);
-router.get("/get-all-pqr", getAllPqr, requireAuth);
+router.get("/get-pqr-by-id/:id", requireAuth, getPqrById);
+router.post("/create-pqr", requireAuth, createPqrHistorySummary);
+router.get("/get-all-pqr", requireAuth, getAllPqr);
 
 export default router;
