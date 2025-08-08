@@ -16,7 +16,7 @@ export const getAccountStatusById = async (req: Request, res: Response): Promise
             return;
         }
 
-        res.json(accountStatus);
+        res.status(200).json(accountStatus);
         return;
     } catch (error) {
         if (error instanceof Error) {

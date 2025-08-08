@@ -8,7 +8,7 @@ export const getRealStateById = async (req: Request, res: Response): Promise<voi
         const { id } = req.params;
 
         const realState = await AppDataSource.getRepository(RealState).findOneBy({
-            id: new ObjectId(id),
+            id: new ObjectId(id)
         });
 
         if (!realState) {
