@@ -5,7 +5,7 @@ import { RealState } from "../../entities/RealState";
 export const createRealState = async (req: Request, res: Response): Promise<void> => {
     try {
         const { hc, name, slug, address, price_from_general, bathrooms, rooms, built_area, description, imagen_url } = req.body;
-        if ( !hc || !name || !slug || !address || !price_from_general || !bathrooms || rooms || !built_area || !description || !imagen_url ) {
+        if ( !hc || !name || !slug || !address || !price_from_general || !bathrooms || !rooms || !built_area || !description || !imagen_url ) {
             res.status(400).json({ error: "Bad request, missing data" })
             return;
         }
