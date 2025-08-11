@@ -19,11 +19,9 @@ export class User extends BaseEntity {
     @Column({ unique: true })
     email!: string;
 
-    // En lugar de @ManyToOne, guardamos el ID del rol
     @Column({ nullable: true })
     roleId?: ObjectId;
 
-    // En lugar de @OneToOne, guardamos el ID del perfil
     @Column({ nullable: true })
     profileId?: ObjectId;
 }

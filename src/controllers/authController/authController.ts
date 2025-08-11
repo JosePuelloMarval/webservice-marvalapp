@@ -26,10 +26,9 @@ export const loginHandler = async (req: Request, res: Response): Promise<void> =
             return;
         }
 
-        // 🔍 Buscar usuario por email
         const user = await AppDataSource.getRepository(User).findOne({
             where: { email },
-            select: { password: true, email: true, name: true, lastname: true, roleId: true } // Incluye password manualmente
+            select: { password: true, email: true, name: true, lastname: true, roleId: true }
         });
 
         if (!user || !user.password) {
