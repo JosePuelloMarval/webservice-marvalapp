@@ -7,22 +7,25 @@ export class AccountStatus extends BaseEntity {
     _id!: ObjectId;
 
     @Column()
-    id!: string;
+    userId!: ObjectId; 
 
     @Column()
-    userId!: string;
-
-    @Column()
-    projectId!: string;
-
-    @Column('double')
-    paidAmount!: number;
+    realStateId!: ObjectId; 
 
     @Column('double')
     totalAmount!: number;
 
+    @Column('double')
+    initialOwnResources!: number;
+
+    @Column('double')
+    initialSpecialResources!: number;
+
+    @Column('double')
+    financeOtherEntities!: number;
+
     @Column()
-    cutOffDate!: string;
+    cutOffDate!: Date;
 
     @Column()
     offerNumber!: string;
@@ -30,24 +33,42 @@ export class AccountStatus extends BaseEntity {
     @Column()
     commitmentsPact!: number;
 
-    @Column()
+    @Column('double')
+    commitmentsPactValue!: number;
+
+    @Column('double')
     commitmentsPaid!: number;
 
     @Column()
     commitmentsPending!: number;
 
-    @Column()
-    commitmentsLate!: number;
+    @Column('double')
+    commitmentsPendingValue!: number;
+
+    @Column('double')
+    commitmentsLateValue!: number;
 
     @Column()
-    lastPaymentDate!: string;
+    lastPaymentDate!: Date;
 
     @Column('double')
     lastPaymentValue!: number;
 
     @Column()
-    nextCommitmentDate!: string;
+    nextCommitmentDate!: Date;
 
     @Column('double')
     nextCommitmentValue!: number;
+
+    @Column('double')
+    interestLate!: number;
+
+    @Column('double')
+    writingExpenses!: number;
+
+    @Column('double')
+    pendingBalance!: number;
+
+    @Column()
+    paymentDeadline!: Date;
 }
