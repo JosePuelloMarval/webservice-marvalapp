@@ -24,4 +24,7 @@ export class User extends BaseEntity {
 
     @Column({ nullable: true })
     profileId?: ObjectId;
+
+    @Column({ nullable: true})
+    accountStatusId?: ObjectId;
 }
