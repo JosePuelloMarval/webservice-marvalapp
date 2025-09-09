@@ -63,7 +63,7 @@ export const loginHandler = async (req: Request, res: Response): Promise<void> =
                 lastname: user.lastname,
                 email: user.email,
                 role: role?.role || null,
-                accountStatus: accountStatus|| null
+                accountStatus: accountStatus?._id || null
             }
         });
         return;
