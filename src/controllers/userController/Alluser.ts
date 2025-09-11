@@ -7,10 +7,7 @@ export const allUsers = async (req: Request, res: Response): Promise<void> => {
        
         const users = await AppDataSource
             .getRepository(User)
-            .createQueryBuilder("user")
-            .leftJoin("user.role", "role")
-            .addSelect(["role.role"])
-            .getMany();
+            .find()
   
         users.length ?
             res.json(users) :
