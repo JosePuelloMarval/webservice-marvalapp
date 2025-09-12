@@ -11,7 +11,7 @@ export const updateUser = async (req: Request, res: Response): Promise<void> => 
         const { name, lastname, email, password, rol } = req.body;
 
         const user = await AppDataSource.getRepository(User).findOneBy({
-            _id: new ObjectId(id)
+            id: id
         });
 
         if (!user) {
@@ -35,7 +35,7 @@ export const updateUser = async (req: Request, res: Response): Promise<void> => 
         user.lastname = lastname;
         user.email = email;
         user.password = hashPassword;
-        user.roleId = new ObjectId(rol);
+        user.role.id = rol;
         await user.save();
         res.sendStatus(200);
     } catch (error) {

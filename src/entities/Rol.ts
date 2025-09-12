@@ -1,15 +1,18 @@
-import { Entity, ObjectIdColumn, Column, BaseEntity } from 'typeorm';
-import { ObjectId } from 'mongodb';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  BaseEntity,
+} from "typeorm";
 
-
-@Entity('roles')
+@Entity("roles")
 export class Role extends BaseEntity {
-  @ObjectIdColumn()
-  _id!: ObjectId;
+  @PrimaryGeneratedColumn("uuid")
+  id!: string;
 
-  @Column({ unique: true })
+  @Column({ type: "varchar", length: 100, unique: true })
   role!: string;
 
-  @Column({ nullable: true })
-  userIds?: ObjectId[];
+  @Column("uuid", { array: true, nullable: true })
+  userIds?: string[];
 }

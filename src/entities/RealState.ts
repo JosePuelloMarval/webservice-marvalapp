@@ -1,38 +1,43 @@
-import { Entity, ObjectIdColumn, Column, BaseEntity } from 'typeorm';
-import { ObjectId } from 'mongodb';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  BaseEntity,
+} from "typeorm";
 
-@Entity('realstate')
+@Entity("realstate")
 export class RealState extends BaseEntity {
-    @ObjectIdColumn()
-    _id!: ObjectId;
+  @PrimaryGeneratedColumn("uuid")
+  id!: string;
 
-    @Column()
-    hc!: number;
+  @Column({ type: "integer" })
+  hc!: number;
 
-    @Column()
-    name!: string;
+  @Column({ type: "varchar", length: 255 })
+  name!: string;
 
-    @Column()
-    slug!: string;
+  @Column({ type: "varchar", length: 255, unique: true })
+  slug!: string;
 
-    @Column()
-    address!: string;
+  @Column({ type: "varchar", length: 255 })
+  address!: string;
 
-    @Column()
-    price_from_general!: number; 
+  @Column({ type: "decimal", precision: 12, scale: 2 })
+  price_from_general!: number;
 
-    @Column()
-    bathrooms!: number;
-    
-    @Column()
-    rooms!: number;
+  @Column({ type: "integer" })
+  bathrooms!: number;
+  
+  @Column({ type: "integer" })
+  rooms!: number;
 
-    @Column()
-    built_area!: number;
+  @Column({ type: "integer" })
+  built_area!: number;
 
-    @Column()
-    description!: string;
+  @Column({ type: "text" })
+  description!: string;
 
-    @Column({ nullable: true })
-    imagen_url?: string;
+  @Column({ type: "varchar", length: 500, nullable: true })
+  imagen_url?: string;
+    accountStatus: any;
 }

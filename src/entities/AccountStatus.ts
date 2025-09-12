@@ -1,74 +1,88 @@
-import { Entity, ObjectIdColumn, Column, BaseEntity } from 'typeorm';
-import { ObjectId } from 'mongodb';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  ManyToOne,
+  JoinColumn,
+  BaseEntity,
+} from "typeorm";
+import { User } from "./User";
+import { RealState } from "./RealState"; // 👈 suponiendo que tienes esta entidad
 
-@Entity('account_status')
+@Entity("account_status")
 export class AccountStatus extends BaseEntity {
-    @ObjectIdColumn()
-    _id!: ObjectId;
+  @PrimaryGeneratedColumn("uuid")
+  id!: string;
 
-    @Column()
-    userId!: ObjectId; 
+  // Relaciones
+  @ManyToOne(() => User, (user) => user.accountStatus, { eager: true })
+  @JoinColumn({ name: "user_id" })
+  user!: User;
 
-    @Column()
-    realStateId!: ObjectId; 
+  @ManyToOne(() => RealState, (realState) => realState.accountStatus, { eager: true })
+  @JoinColumn({ name: "real_state_id" })
+  realState!: RealState;
 
-    @Column('double')
-    totalAmount!: number;
+  // Campos numéricos (decimal recomendado para valores financieros)
+  @Column("decimal", { precision: 15, scale: 2 })
+  totalAmount!: number;
 
-    @Column('double')
-    initialOwnResources!: number;
+  @Column("decimal", { precision: 15, scale: 2 })
+  initialOwnResources!: number;
 
-    @Column('double')
-    initialSpecialResources!: number;
+  @Column("decimal", { precision: 15, scale: 2 })
+  initialSpecialResources!: number;
 
-    @Column('double')
-    financeOtherEntities!: number;
+  @Column("decimal", { precision: 15, scale: 2 })
+  financeOtherEntities!: number;
 
-    @Column()
-    cutOffDate!: Date;
+  // Fechas
+  @Column({ type: "date" })
+  cutOffDate!: Date;
 
-    @Column()
-    offerNumber!: string;
+  @Column()
+  offerNumber!: string;
 
-    @Column()
-    commitmentsPact!: number;
+  @Column("int")
+  commitmentsPact!: number;
 
-    @Column('double')
-    commitmentsPactValue!: number;
+  @Column("decimal", { precision: 15, scale: 2 })
+  commitmentsPactValue!: number;
 
-    @Column('double')
-    commitmentsPaid!: number;
+  @Column("decimal", { precision: 15, scale: 2 })
+  commitmentsPaid!: number;
 
-    @Column()
-    commitmentsPending!: number;
+  @Column("int")
+  commitmentsPending!: number;
 
-    @Column('double')
-    commitmentsPendingValue!: number;
+  @Column("decimal", { precision: 15, scale: 2 })
+  commitmentsPendingValue!: number;
 
-    @Column('double')
-    commitmentsLateValue!: number;
+  @Column("decimal", { precision: 15, scale: 2 })
+  commitmentsLateValue!: number;
 
-    @Column()
-    lastPaymentDate!: Date;
+  @Column({ type: "date", nullable: true })
+  lastPaymentDate!: Date;
 
-    @Column('double')
-    lastPaymentValue!: number;
+  @Column("decimal", { precision: 15, scale: 2, nullable: true })
+  lastPaymentValue!: number;
 
-    @Column()
-    nextCommitmentDate!: Date;
+  @Column({ type: "date", nullable: true })
+  nextCommitmentDate!: Date;
 
-    @Column('double')
-    nextCommitmentValue!: number;
+  @Column("decimal", { precision: 15, scale: 2, nullable: true })
+  nextCommitmentValue!: number;
 
-    @Column('double')
-    interestLate!: number;
+  @Column("decimal", { precision: 15, scale: 2 })
+  interestLate!: number;
 
-    @Column('double')
-    writingExpenses!: number;
+  @Column("decimal", { precision: 15, scale: 2 })
+  writingExpenses!: number;
 
-    @Column('double')
-    pendingBalance!: number;
+  @Column("decimal", { precision: 15, scale: 2 })
+  pendingBalance!: number;
 
-    @Column()
-    paymentDeadline!: Date;
+  @Column({ type: "date" })
+  paymentDeadline!: Date;
+    payments: any;
 }

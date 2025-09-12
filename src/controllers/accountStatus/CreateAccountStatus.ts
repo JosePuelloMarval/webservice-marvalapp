@@ -72,8 +72,8 @@ export const createAccountStatus = async (req: Request, res: Response): Promise<
         }
 
         const accountStatus = new AccountStatus();
-        accountStatus.userId = new ObjectId(userId);
-        accountStatus.realStateId = new ObjectId(realStateId);
+        accountStatus.user = userId;
+        accountStatus.realState = realStateId;
         accountStatus.totalAmount = totalAmount;
         accountStatus.initialOwnResources = initialOwnResources;
         accountStatus.initialSpecialResources = initialSpecialResources;
@@ -97,7 +97,7 @@ export const createAccountStatus = async (req: Request, res: Response): Promise<
 
         const created = await AppDataSource.getMongoRepository(AccountStatus).save(accountStatus);
 
-        res.status(201).json({ id: created._id });
+        res.status(201).json({ id: created.id });
     } catch (error) {
         if (error instanceof Error) {
             res.status(500).json({ message: error.message });

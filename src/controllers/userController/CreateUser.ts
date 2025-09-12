@@ -36,10 +36,10 @@ export const createUser = async (req: Request, res: Response): Promise<void> => 
             user.name = name
             user.lastname = lastname
             user.email = email
-            user.roleId = role._id
+            user.role.id = role.id
             user.password = hashPassword
             const createUser = await userRepository.save(user);
-            res.status(201).json({ id: createUser._id });
+            res.status(201).json({ id: createUser.id });
             return;
         }
         res.status(500).json({ message: "Ya existe un usuario con este correo" })

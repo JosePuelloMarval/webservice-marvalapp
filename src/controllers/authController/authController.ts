@@ -8,7 +8,6 @@ import { User } from "../../entities/User";
 import { Role } from "../../entities/Rol";
 import { AccountStatus } from "../../entities/AccountStatus";
 import bcrypt from "bcrypt";
-import { ObjectId } from "mongodb";
 
 dotenv.config();
 
@@ -29,7 +28,7 @@ export const loginHandler = async (req: Request, res: Response): Promise<void> =
 
         const user = await AppDataSource.getRepository(User).findOne({
             where: { email },
-            select: { password: true, email: true, name: true, lastname: true, roleId: true }
+            select: { password: true, email: true, name: true, lastname: true }
         });
 
         if (!user || !user.password) {
@@ -44,21 +43,21 @@ export const loginHandler = async (req: Request, res: Response): Promise<void> =
         }
 
         let role: Role | null = null;
-        if (user.roleId) {
-            role = await AppDataSource.getRepository(Role).findOneBy({ _id: new ObjectId(user.roleId) });
+        if (user.role) {
+            role = await AppDataSource.getRepository(Role).findOneBy({ id: user.role.role });
         }
 
         let accountStatus: AccountStatus | null = null;
-        if(user.accountStatusId){
-            accountStatus = await AppDataSource.getRepository(AccountStatus).findOneBy({ _id: new ObjectId(user.accountStatusId)})
+        if(user.accountStatus){
+            accountStatus = await AppDataSource.getRepository(AccountStatus).findOneBy({id : user.accountStatus.id})
         }
 
-        const token = jwt.sign({ id: user._id, email: user.email }, SECRET_KEY, { expiresIn: 60 * 60 * 24 });
+        const token = jwt.sign({ id: user.id, email: user.email }, SECRET_KEY, { expiresIn: 60 * 60 * 24 });
 
         res.json({
             token,
             user: {
-                id: user._id,
+                id: user.id,
                 name: user.name,
                 lastname: user.lastname,
                 email: user.email,

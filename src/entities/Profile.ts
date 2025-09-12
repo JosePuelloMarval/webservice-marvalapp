@@ -1,23 +1,21 @@
-import { Entity, ObjectIdColumn, Column, BaseEntity } from 'typeorm';
-import { ObjectId } from 'mongodb';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  BaseEntity,
+  OneToOne,
+  JoinColumn,
+} from "typeorm";
+import { User } from "./User";
 
-@Entity('profile')
+@Entity("profile")
 export class Profile extends BaseEntity {
-    @ObjectIdColumn()
-    _id!: ObjectId;
+  @PrimaryGeneratedColumn("uuid")
+  id!: string;
 
-    @Column()
-    userId!: ObjectId;
+  @OneToOne(() => User, (user) => user.profile, { onDelete: "CASCADE" })
+  @JoinColumn({ name: "user_id" })
+  user!: User;
 
-    @Column({ nullable: true })
-    phone?: string;
 
-    @Column({ nullable: true })
-    address?: string;
-
-    @Column({ nullable: true })
-    city?: string;
-
-    @Column({ nullable: true })
-    country?: string;
 }

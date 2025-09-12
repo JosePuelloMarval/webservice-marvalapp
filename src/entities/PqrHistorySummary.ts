@@ -1,26 +1,35 @@
-import { Entity, ObjectIdColumn, Column, BaseEntity } from 'typeorm';
-import { ObjectId } from 'mongodb';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  BaseEntity,
+  ManyToOne,
+  JoinColumn,
+} from "typeorm";
+import { User } from "./User";
 
-@Entity('pqr_history_summary')
+@Entity("pqr_history_summary")
 export class PqrHistorySummary extends BaseEntity {
-    @ObjectIdColumn()
-    _id!: ObjectId;
+  @PrimaryGeneratedColumn("uuid")
+  id!: string;
 
-    @Column()
-    caseNumber!: string;
+  @Column()
+  caseNumber!: string;
 
-    @Column()
-    subject!: string;
+  @Column()
+  subject!: string;
 
-    @Column()
-    status!: string;
+  @Column()
+  status!: string;
 
-    @Column('bigint')
-    timestamp!: number;
+  // 👇 puedes dejarlo como bigint (UNIX timestamp) o usar Date
+  @Column("bigint")
+  timestamp!: number;
 
-    @Column()
-    last_message_preview!: string;
+  @Column()
+  last_message_preview!: string;
 
-    @Column()
-    userId!: ObjectId;
+  @ManyToOne(() => User, (user) => user.pqrHistorySummaries, { eager: true })
+  @JoinColumn({ name: "user_id" })
+  user!: User;
 }

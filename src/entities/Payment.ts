@@ -1,31 +1,41 @@
-import { Entity, ObjectIdColumn, Column, BaseEntity, Index } from 'typeorm';
-import { ObjectId } from 'mongodb';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  ManyToOne,
+  JoinColumn,
+  BaseEntity,
+  Index,
+} from "typeorm";
+import { User } from "./User";
+import { AccountStatus } from "./AccountStatus";
 
-@Entity('payments')
+@Entity("payments")
 export class Payment extends BaseEntity {
-    @ObjectIdColumn()
-    _id!: ObjectId;
+  @PrimaryGeneratedColumn("uuid")
+  id!: string;
 
-    @Index()
-    @Column()
-    accountStatusId!: ObjectId; 
+  @Index()
+  @ManyToOne(() => AccountStatus, (accountStatus) => accountStatus.payments, { eager: true })
+  @JoinColumn({ name: "account_status_id" })
+  accountStatus!: AccountStatus;
 
-    @Column()
-    userId!: ObjectId;
+  @ManyToOne(() => User, (user) => user.payments, { eager: true })
+  @JoinColumn({ name: "user_id" })
+  user!: User;
 
-    @Column('double')
-    amount!: number;
+  @Column("decimal", { precision: 15, scale: 2 })
+  amount!: number;
 
-    @Column()
-    paymentDate!: Date;
+  @Column({ type: "timestamp" })
+  paymentDate!: Date;
 
-    @Column()
-    method!: string; 
+  @Column()
+  method!: string;
 
-    @Column()
-    reference!: string; 
+  @Column()
+  reference!: string;
 
-    @Column()
-    paymentMethod!: string;
-
+  @Column()
+  paymentMethod!: string;
 }
