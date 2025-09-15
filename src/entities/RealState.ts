@@ -1,43 +1,39 @@
-import {
-  Entity,
-  PrimaryGeneratedColumn,
-  Column,
-  BaseEntity,
-} from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, BaseEntity } from 'typeorm';
+import { AccountStatus } from './AccountStatus';
 
-@Entity("realstate")
+@Entity('realstate')
 export class RealState extends BaseEntity {
-  @PrimaryGeneratedColumn("uuid")
+  @PrimaryGeneratedColumn('uuid')
   id!: string;
 
-  @Column({ type: "integer" })
+  @Column({ type: 'integer' })
   hc!: number;
 
-  @Column({ type: "varchar", length: 255 })
+  @Column({ type: 'varchar', length: 255 })
   name!: string;
 
-  @Column({ type: "varchar", length: 255, unique: true })
+  @Column({ type: 'varchar', length: 255, unique: true })
   slug!: string;
 
-  @Column({ type: "varchar", length: 255 })
+  @Column({ type: 'varchar', length: 255 })
   address!: string;
 
-  @Column({ type: "decimal", precision: 12, scale: 2 })
+  @Column({ type: 'decimal', precision: 12, scale: 2 })
   price_from_general!: number;
 
-  @Column({ type: "integer" })
+  @Column({ type: 'integer' })
   bathrooms!: number;
-  
-  @Column({ type: "integer" })
+
+  @Column({ type: 'integer' })
   rooms!: number;
 
-  @Column({ type: "integer" })
+  @Column({ type: 'integer' })
   built_area!: number;
 
-  @Column({ type: "text" })
+  @Column({ type: 'text' })
   description!: string;
 
-  @Column({ type: "varchar", length: 500, nullable: true })
+  @Column({ type: 'varchar', length: 500, nullable: true })
   imagen_url?: string;
-    accountStatus: any;
+  accountStatus: AccountStatus | undefined;
 }

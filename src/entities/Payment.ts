@@ -6,28 +6,28 @@ import {
   JoinColumn,
   BaseEntity,
   Index,
-} from "typeorm";
-import { User } from "./User";
-import { AccountStatus } from "./AccountStatus";
+} from 'typeorm';
+import { User } from './User';
+import { AccountStatus } from './AccountStatus';
 
-@Entity("payments")
+@Entity('payments')
 export class Payment extends BaseEntity {
-  @PrimaryGeneratedColumn("uuid")
+  @PrimaryGeneratedColumn('uuid')
   id!: string;
 
   @Index()
-  @ManyToOne(() => AccountStatus, (accountStatus) => accountStatus.payments, { eager: true })
-  @JoinColumn({ name: "account_status_id" })
+  @ManyToOne(() => AccountStatus, (accountStatus) => accountStatus.payments)
+  @JoinColumn({ name: 'account_status_id' })
   accountStatus!: AccountStatus;
 
   @ManyToOne(() => User, (user) => user.payments, { eager: true })
-  @JoinColumn({ name: "user_id" })
+  @JoinColumn({ name: 'user_id' })
   user!: User;
 
-  @Column("decimal", { precision: 15, scale: 2 })
+  @Column('decimal', { precision: 15, scale: 2 })
   amount!: number;
 
-  @Column({ type: "timestamp" })
+  @Column({ type: 'timestamp' })
   paymentDate!: Date;
 
   @Column()

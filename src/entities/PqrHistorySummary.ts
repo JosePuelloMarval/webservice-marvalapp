@@ -1,16 +1,9 @@
-import {
-  Entity,
-  PrimaryGeneratedColumn,
-  Column,
-  BaseEntity,
-  ManyToOne,
-  JoinColumn,
-} from "typeorm";
-import { User } from "./User";
+import { Entity, PrimaryGeneratedColumn, Column, BaseEntity, ManyToOne, JoinColumn } from 'typeorm';
+import { User } from './User';
 
-@Entity("pqr_history_summary")
+@Entity('pqr_history_summary')
 export class PqrHistorySummary extends BaseEntity {
-  @PrimaryGeneratedColumn("uuid")
+  @PrimaryGeneratedColumn('uuid')
   id!: string;
 
   @Column()
@@ -23,13 +16,13 @@ export class PqrHistorySummary extends BaseEntity {
   status!: string;
 
   // 👇 puedes dejarlo como bigint (UNIX timestamp) o usar Date
-  @Column("bigint")
+  @Column('bigint')
   timestamp!: number;
 
   @Column()
   last_message_preview!: string;
 
-  @ManyToOne(() => User, (user) => user.pqrHistorySummaries, { eager: true })
-  @JoinColumn({ name: "user_id" })
+  @ManyToOne(() => User, (user) => user.pqrHistorySummaries)
+  @JoinColumn({ name: 'user_id' })
   user!: User;
 }

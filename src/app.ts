@@ -1,23 +1,24 @@
 import express from 'express';
 import morgan from 'morgan';
 import cors from 'cors';
-import userRoutes from "./routes/routes";
-
+import userRoutes from './routes/routes';
 
 const app = express();
 
-app.use(cors({
-    origin: `http://localhost:${process.env.PORT?? 3000}`,
-    credentials: true
-}));
+app.use(
+  cors({
+    origin: `http://localhost:${process.env.PORT ?? 3000}`,
+    credentials: true,
+  })
+);
 
 app.use(morgan('dev'));
-app.use(express.json())
+app.use(express.json());
 
-app.get("/", (req, res) => {
-    res.send(`Hola, Express con TypeScript! ${app.get("port")}`);
+app.get('/', (req, res) => {
+  res.send(`Hola, Express con TypeScript! ${app.get('port')}`);
 });
 
-app.use('/api',userRoutes);
+app.use('/api', userRoutes);
 
 export default app;

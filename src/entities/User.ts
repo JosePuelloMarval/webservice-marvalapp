@@ -6,26 +6,28 @@ import {
   ManyToOne,
   OneToOne,
   JoinColumn,
-} from "typeorm";
-import { Role } from "./Rol";
-import { Profile } from "./Profile";
-import { AccountStatus } from "./AccountStatus";
+} from 'typeorm';
+import { Role } from './Rol';
+import { Profile } from './Profile';
+import { AccountStatus } from './AccountStatus';
+import { PqrHistorySummary } from './PqrHistorySummary';
+import { Payment } from './Payment';
 
-@Entity("users")
+@Entity('users')
 export class User extends BaseEntity {
-  @PrimaryGeneratedColumn("uuid")
+  @PrimaryGeneratedColumn('uuid')
   id!: string;
 
-  @Column({ type: "varchar", length: 100 })
+  @Column({ type: 'varchar', length: 100 })
   name!: string;
 
-  @Column({ type: "varchar", length: 100 })
+  @Column({ type: 'varchar', length: 100 })
   lastname!: string;
 
   @Column({ select: false })
   password!: string;
 
-  @Column({ unique: true, type: "varchar", length: 150 })
+  @Column({ unique: true, type: 'varchar', length: 150 })
   email!: string;
 
   @Column({ nullable: true })
@@ -40,17 +42,17 @@ export class User extends BaseEntity {
   @Column({ nullable: true })
   country?: string;
 
-  @ManyToOne(() => Role, (role) => role.userIds, { eager: true })
-  @JoinColumn({ name: "role_id" })
+  @ManyToOne(() => Role, (role) => role.userIds)
+  @JoinColumn({ name: 'role_id' })
   role!: Role;
 
-  @OneToOne(() => Profile, (profile) => profile.user, { cascade: true, eager: true })
-  @JoinColumn({ name: "profile_id" })
+  @OneToOne(() => Profile, (profile) => profile.user, { cascade: true })
+  @JoinColumn({ name: 'profile_id' })
   profile?: Profile;
 
-  @OneToOne(() => AccountStatus, (accountStatus) => accountStatus.user, { cascade: true, eager: true })
-  @JoinColumn({ name: "account_status_id" })
+  @OneToOne(() => AccountStatus, (accountStatus) => accountStatus.user, { cascade: true })
+  @JoinColumn({ name: 'account_status_id' })
   accountStatus?: AccountStatus;
-    payments: any;
-    pqrHistorySummaries: any;
+  payments: Payment | undefined;
+  pqrHistorySummaries: PqrHistorySummary | undefined;
 }

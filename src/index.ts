@@ -1,25 +1,25 @@
+import './entities/User';
+import './entities/Rol';
+import './entities/Profile';
+import './entities/RealState';
 
-import "./entities/User";
-import "./entities/Rol";
-import "./entities/Profile";
-import "./entities/RealState";
-
-import app from "./app";
-import dotenv from "dotenv";
-import { AppDataSource } from "./db";
+import app from './app';
+import dotenv from 'dotenv';
+import { AppDataSource } from './db';
 
 dotenv.config();
 const PORT = process.env.PORT || 3000;
 
-
 async function main() {
-    try {
-        await AppDataSource.initialize();
-        app.listen(PORT);
-        console.log(`Server running on port ${PORT}`);
-    } catch (error) {
-        console.error(error);
-    }
+  try {
+    await AppDataSource.initialize();
+    app.listen(PORT);
+    // eslint-disable-next-line no-console
+    console.log(`Server running on port ${PORT}`);
+  } catch (error) {
+    // eslint-disable-next-line no-console
+    console.error(error);
+  }
 }
 
 main();
