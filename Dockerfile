@@ -1,34 +1,36 @@
-# Etapa 1: Construcción con Node y TypeScript
+# ---------- Etapa 1: Construcción ----------
 FROM node:18-alpine AS builder
 
+# Crear directorio de trabajo
 WORKDIR /app
 
-# Copiar archivos de dependencias
+# Copiar archivos de dependencias primero
 COPY package*.json tsconfig.json ./
 
-# Instalar dependencias
+# Instalar TODAS las dependencias (incluyendo dev para poder compilar)
 RUN npm install
 
-# Copiar el resto del código
+# Copiar todo el código fuente
 COPY . .
 
-# Compilar TypeScript a JavaScript (salida en dist/)
+# Compilar TypeScript a JavaScript
 RUN npm run build
 
-# Etapa 2: Imagen de Producción
-FROM node:18-alpine
+
+# ---------- Etapa 2: Producción ----------
+FROM node:18-alpine AS production
 
 WORKDIR /app
 
-# Copiar solo lo necesario desde la etapa builder
-COPY --from=builder /app/package*.json ./
+EXPOSE 5000
+
+ENV PORT=5000
+
+COPY package*.json .
+
+RUN npm ci --only=production
+
 COPY --from=builder /app/dist ./dist
-
-# Instalar solo dependencias de producción
-RUN npm install --only=production
-
-# Exponer el puerto de la app (ajusta si es diferente)
-EXPOSE 3000
 
 # Comando de inicio
 CMD ["node", "dist/index.js"]

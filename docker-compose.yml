@@ -1,0 +1,21 @@
+services:
+  
+  app_webservice:
+    build: .
+    image: us-phoenix-1.ocir.io/axgdj8ofhsek/nopudo-app:3.1.5
+    container_name: webservice-marvalapp
+    environment:
+       - ENV=ENV   
+       - DB_HOST=${DB_HOST}
+       - DB_PORT=${DB_PORT}
+       - DB_USER=${DB_USER}
+       - DB_PASSWORD=${DB_PASSWORD}
+       - DB_NAME=${DB_NAME}
+       - PORT=${PORT}
+    networks:
+            - mmi-net
+    ports:
+       - 5000:5000
+networks:
+    mmi-net:
+        name: mmi-net

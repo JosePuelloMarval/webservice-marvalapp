@@ -6,11 +6,14 @@ export class RealState extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
   id!: string;
 
-  @Column({ type: 'integer' })
+  @Column({ type: 'varchar' })
   hc!: number;
 
   @Column({ type: 'varchar', length: 255 })
   name!: string;
+
+  @Column({ type: 'varchar', length: 255, nullable: true })
+  typology!: string;
 
   @Column({ type: 'varchar', length: 255, unique: true })
   slug!: string;
