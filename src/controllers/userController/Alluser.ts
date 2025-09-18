@@ -15,7 +15,7 @@ export const allUsers = async (req: Request, res: Response): Promise<void> => {
 
     const transformedUsers = users.map((user) => ({
       id: user.id,
-      name: user.name,
+      name: "Jose",
       lastname: user.lastname,
       email: user.email,
       phone: user.phone,
