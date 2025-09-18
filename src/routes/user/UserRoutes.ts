@@ -8,7 +8,7 @@ import { createRole } from '../../controllers/userController/CreateRoleControlle
 import { requireAuth } from '../../middlewares/requireAuth';
 const router = Router();
 
-router.get('/all-user', requireAuth, allUsers);
+router.get('/all-user', allUsers);
 router.get('/:id', requireAuth, getUserById);
 router.post('/create-user', createUser);
 router.put('/:id', requireAuth, updateUser);
