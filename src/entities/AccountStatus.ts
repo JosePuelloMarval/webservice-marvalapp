@@ -1,6 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, BaseEntity } from 'typeorm';
-import { User } from './User';
-import { RealState } from './RealState';
+import { Entity, PrimaryGeneratedColumn, Column, BaseEntity, OneToMany } from 'typeorm';
 import { Payment } from './Payment';
 
 @Entity('account_status')
@@ -8,13 +6,11 @@ export class AccountStatus extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
   id!: string;
 
-  @ManyToOne(() => User, (user) => user.accountStatus)
-  @JoinColumn({ name: 'user_id' })
-  user!: User;
+ @Column('uuid', { array: true, nullable: true })
+  userIds?: string[];
 
-  @ManyToOne(() => RealState, (realState) => realState.accountStatus)
-  @JoinColumn({ name: 'real_state_id' })
-  realState!: RealState;
+ @OneToMany(() => AccountStatus, (accountStatus) => accountStatus.realState, { cascade: true })
+  accountStatuses!: AccountStatus[];
 
   @Column('decimal', { precision: 15, scale: 2 })
   totalAmount!: number;
@@ -76,4 +72,5 @@ export class AccountStatus extends BaseEntity {
   @Column({ type: 'date' })
   paymentDeadline!: Date;
   payments: Payment | undefined;
+  realState: any;
 }

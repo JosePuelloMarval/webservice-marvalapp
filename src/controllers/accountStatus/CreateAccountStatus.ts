@@ -58,10 +58,9 @@ export const createAccountStatus = async (req: Request, res: Response): Promise<
     }
 
     // Verifica si ya existe para ese usuario e inmueble
-    const existing = await AppDataSource.getMongoRepository(AccountStatus).findOne({
+    const existing = await AppDataSource.getRepository(AccountStatus).findOne({
       where: {
-        userId: userId,
-        realStateId: realStateId,
+
       },
     });
 
@@ -73,7 +72,7 @@ export const createAccountStatus = async (req: Request, res: Response): Promise<
     }
 
     const accountStatus = new AccountStatus();
-    accountStatus.user = userId;
+    accountStatus.userIds = userId;
     accountStatus.realState = realStateId;
     accountStatus.totalAmount = totalAmount;
     accountStatus.initialOwnResources = initialOwnResources;
@@ -96,7 +95,7 @@ export const createAccountStatus = async (req: Request, res: Response): Promise<
     accountStatus.pendingBalance = pendingBalance;
     accountStatus.paymentDeadline = new Date(paymentDeadline);
 
-    const created = await AppDataSource.getMongoRepository(AccountStatus).save(accountStatus);
+    const created = await AppDataSource.getRepository(AccountStatus).save(accountStatus);
 
     res.status(201).json({ id: created.id });
   } catch (error) {

@@ -6,6 +6,7 @@ import {
   ManyToOne,
   OneToOne,
   JoinColumn,
+  OneToMany,
 } from 'typeorm';
 import { Role } from './Rol';
 import { Profile } from './Profile';
@@ -50,9 +51,13 @@ export class User extends BaseEntity {
   @JoinColumn({ name: 'profile_id' })
   profile?: Profile;
 
-  @OneToOne(() => AccountStatus, (accountStatus) => accountStatus.user, { cascade: true })
-  @JoinColumn({ name: 'account_status_id' })
+  @OneToOne(() => AccountStatus, (accountStatus) => accountStatus )
+  @JoinColumn({ name: 'user_id' })
   accountStatus?: AccountStatus;
-  payments: Payment | undefined;
-  pqrHistorySummaries: PqrHistorySummary | undefined;
+
+  @OneToMany(() => Payment, (payment) => payment.user, { cascade: true })
+  payments!: Payment[];
+
+  @OneToMany(() => PqrHistorySummary, (pqrHistorySummary) => pqrHistorySummary.user, { cascade: true })
+  pqrHistorySummaries!: PqrHistorySummary[];
 }

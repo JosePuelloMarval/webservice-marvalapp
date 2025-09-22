@@ -28,7 +28,8 @@ export const loginHandler = async (req: Request, res: Response): Promise<void> =
 
     const user = await AppDataSource.getRepository(User).findOne({
       where: { email },
-      select: { password: true, email: true, name: true, lastname: true },
+      select: { password: true, email: true, name: true, lastname: true, city: true, phone: true, country: true, address: true },
+    
     });
 
     if (!user || !user.password) {
@@ -42,11 +43,7 @@ export const loginHandler = async (req: Request, res: Response): Promise<void> =
       return;
     }
 
-    let role: Role | null = null;
-    if (user.role) {
-      role = await AppDataSource.getRepository(Role).findOneBy({ id: user.role.role });
-    }
-
+  
     let accountStatus: AccountStatus | null = null;
     if (user.accountStatus) {
       accountStatus = await AppDataSource.getRepository(AccountStatus).findOneBy({
@@ -65,7 +62,11 @@ export const loginHandler = async (req: Request, res: Response): Promise<void> =
         name: user.name,
         lastname: user.lastname,
         email: user.email,
-        role: role?.role || null,
+        phone: user.phone,
+        address: user.address,
+        city: user.city,
+        country: user.country,
+        role: user.role?.role || null,
         accountStatus: accountStatus || null,
       },
     });

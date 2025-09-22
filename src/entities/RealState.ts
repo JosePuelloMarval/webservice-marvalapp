@@ -1,5 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, BaseEntity } from 'typeorm';
-import { AccountStatus } from './AccountStatus';
+import { Entity, PrimaryGeneratedColumn, Column, BaseEntity, ManyToOne, JoinColumn } from 'typeorm';
 
 @Entity('realstate')
 export class RealState extends BaseEntity {
@@ -38,5 +37,10 @@ export class RealState extends BaseEntity {
 
   @Column({ type: 'varchar', length: 500, nullable: true })
   imagen_url?: string;
-  accountStatus: AccountStatus | undefined;
+
+  @ManyToOne(() => RealState, (realState) => realState.accountStatuses)
+  @JoinColumn({ name: 'real_state_id' })
+  realState!: RealState;
+  accountStatuses: any;
+
 }
