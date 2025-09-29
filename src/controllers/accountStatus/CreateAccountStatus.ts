@@ -72,7 +72,7 @@ export const createAccountStatus = async (req: Request, res: Response): Promise<
     }
 
     const accountStatus = new AccountStatus();
-    accountStatus.userIds = userId;
+    accountStatus.user = userId;
     accountStatus.realState = realStateId;
     accountStatus.totalAmount = totalAmount;
     accountStatus.initialOwnResources = initialOwnResources;

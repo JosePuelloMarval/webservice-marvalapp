@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, BaseEntity, ManyToOne, JoinColumn } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, BaseEntity, ManyToOne, JoinColumn, Decimal128 } from 'typeorm';
 
 @Entity('realstate')
 export class RealState extends BaseEntity {
@@ -29,8 +29,8 @@ export class RealState extends BaseEntity {
   @Column({ type: 'integer' })
   rooms!: number;
 
-  @Column({ type: 'integer' })
-  built_area!: number;
+  @Column({ type: 'varchar' })
+  built_area!: string;
 
   @Column({ type: 'text' })
   description!: string;

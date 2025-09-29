@@ -5,7 +5,7 @@ import { User } from '../../entities/User';
 export const allUsers = async (req: Request, res: Response): Promise<void> => {
   try {
     const users = await AppDataSource.getRepository(User).find({
-      relations: ['role', 'accountStatuses'],
+      relations: ['role', 'accountStatus'],
     });
 
     if (!users.length) {
@@ -15,7 +15,7 @@ export const allUsers = async (req: Request, res: Response): Promise<void> => {
 
     const transformedUsers = users.map((user) => ({
       id: user.id,
-      name: "Jose",
+      name: user.name,
       lastname: user.lastname,
       email: user.email,
       phone: user.phone,
@@ -23,7 +23,7 @@ export const allUsers = async (req: Request, res: Response): Promise<void> => {
       city: user.city,
       country: user.country,
       role: user.role?.role || null,
-      accountStatus: user.accountStatus || null,
+      accountStatus: user.accountStatuses || null,
 
     }));
 

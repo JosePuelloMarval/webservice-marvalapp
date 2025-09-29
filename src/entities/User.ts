@@ -25,7 +25,7 @@ export class User extends BaseEntity {
   @Column({ type: 'varchar', length: 100 })
   lastname!: string;
 
-  @Column({ select: false })
+  @Column({ type: 'varchar'})
   password!: string;
 
   @Column({ unique: true, type: 'varchar', length: 150 })
@@ -51,9 +51,8 @@ export class User extends BaseEntity {
   @JoinColumn({ name: 'profile_id' })
   profile?: Profile;
 
-  @OneToOne(() => AccountStatus, (accountStatus) => accountStatus )
-  @JoinColumn({ name: 'user_id' })
-  accountStatus?: AccountStatus;
+  @OneToMany(() => AccountStatus, (accountStatus) => accountStatus.user, { cascade: true })
+  accountStatuses!: AccountStatus[];
 
   @OneToMany(() => Payment, (payment) => payment.user, { cascade: true })
   payments!: Payment[];

@@ -16,6 +16,7 @@ export const createRealState = async (req: Request, res: Response): Promise<void
       description,
       imagen_url,
     } = req.body;
+    
     if (
       !hc ||
       !name ||

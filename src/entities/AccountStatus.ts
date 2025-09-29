@@ -1,16 +1,14 @@
-import { Entity, PrimaryGeneratedColumn, Column, BaseEntity, OneToMany } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, BaseEntity, ManyToOne } from 'typeorm';
 import { Payment } from './Payment';
+import { User } from './User';
 
 @Entity('account_status')
 export class AccountStatus extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
   id!: string;
 
- @Column('uuid', { array: true, nullable: true })
-  userIds?: string[];
-
- @OneToMany(() => AccountStatus, (accountStatus) => accountStatus.realState, { cascade: true })
-  accountStatuses!: AccountStatus[];
+  @ManyToOne(() => User, (user) => user.accountStatuses, { onDelete: 'CASCADE' })
+  user!: User;
 
   @Column('decimal', { precision: 15, scale: 2 })
   totalAmount!: number;

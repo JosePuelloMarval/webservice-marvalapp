@@ -5,7 +5,6 @@ import dotenv from 'dotenv';
 
 import jwt from 'jsonwebtoken';
 import { User } from '../../entities/User';
-import { Role } from '../../entities/Rol';
 import { AccountStatus } from '../../entities/AccountStatus';
 import bcrypt from 'bcrypt';
 
@@ -27,12 +26,13 @@ export const loginHandler = async (req: Request, res: Response): Promise<void> =
     }
 
     const user = await AppDataSource.getRepository(User).findOne({
-      where: { email },
-      select: { password: true, email: true, name: true, lastname: true, city: true, phone: true, country: true, address: true },
-    
+      where: { email }, 
+      relations: ["role"]
     });
 
-    if (!user || !user.password) {
+    console.log(user, " aca user")
+
+    if (!user || !user?.password) {
       res.status(400).json({ message: 'User not found' });
       return;
     }
@@ -44,10 +44,12 @@ export const loginHandler = async (req: Request, res: Response): Promise<void> =
     }
 
   
+  
     let accountStatus: AccountStatus | null = null;
-    if (user.accountStatus) {
+
+    if (user.accountStatuses) {
       accountStatus = await AppDataSource.getRepository(AccountStatus).findOneBy({
-        id: user.accountStatus.id,
+        id: user.id,
       });
     }
 
