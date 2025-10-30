@@ -12,6 +12,7 @@ router.get('/all-user', allUsers);
 router.get('/:id', requireAuth, getUserById);
 router.post('/create-user', createUser);
 router.put('/:id', requireAuth, updateUser);
-router.post('/create-role', createRole);
+router.post('/create-role', createRole); 
+router.post('/prueba'); 
 
 export default router;
