@@ -1,12 +1,12 @@
-import { Entity, PrimaryGeneratedColumn, Column, BaseEntity, OneToMany, ManyToOne, JoinColumn, Decimal128 } from 'typeorm';
-import { Property } from './Property';
+import { Entity, PrimaryGeneratedColumn, Column, BaseEntity, ManyToOne, JoinColumn } from 'typeorm';
+import { RealState } from './RealState';
 
-@Entity('realstate')
-export class RealState extends BaseEntity {
+@Entity('property')
+export class Property extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
   id!: string;
 
-  @Column({ type: 'varchar' })
+ @Column({ type: 'varchar' })
   hc!: number;
 
   @Column({ type: 'varchar', length: 255 })
@@ -14,9 +14,6 @@ export class RealState extends BaseEntity {
 
   @Column({ type: 'varchar', length: 255, nullable: true })
   typology!: string;
-
-  @Column({ type: 'varchar', length: 255, unique: true })
-  slug!: string;
 
   @Column({ type: 'varchar', length: 255 })
   address!: string;
@@ -39,12 +36,8 @@ export class RealState extends BaseEntity {
   @Column({ type: 'varchar', length: 500, nullable: true })
   imagen_url?: string;
 
-  @ManyToOne(() => RealState, (realState) => realState.accountStatuses)
-  @JoinColumn({ name: 'real_state_id' })
-  realState!: RealState;
-  accountStatuses: any;
+  @ManyToOne(() => RealState, (realstate: RealState) => realstate.property)
+  @JoinColumn({ name: 'id' })
+  realstate!: RealState;
 
-   @ManyToOne(() => Property, (property: Property) => property.realstate)
-   @JoinColumn({ name: 'id' })
-   property!: Property
 }
