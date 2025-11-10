@@ -4,9 +4,8 @@ import {
   Column,
   BaseEntity,
   ManyToOne,
-  OneToOne,
-  JoinColumn,
   OneToMany,
+  JoinColumn,
 } from 'typeorm';
 import { Role } from './Rol';
 import { Profile } from './Profile';
@@ -25,7 +24,7 @@ export class User extends BaseEntity {
   @Column({ type: 'varchar', length: 100 })
   lastname!: string;
 
-  @Column({ type: 'varchar'})
+  @Column({ type: 'varchar' })
   password!: string;
 
   @Column({ unique: true, type: 'varchar', length: 150 })
@@ -43,13 +42,12 @@ export class User extends BaseEntity {
   @Column({ nullable: true })
   country?: string;
 
-  @ManyToOne(() => Role, (role) => role.userIds)
+  @ManyToOne(() => Role, (role) => role.users)
   @JoinColumn({ name: 'role_id' })
   role!: Role;
 
-  @OneToOne(() => Profile, (profile) => profile.user, { cascade: true })
-  @JoinColumn({ name: 'profile_id' })
-  profile?: Profile;
+  @OneToMany(() => Profile, (profile) => profile.user, { cascade: true })
+  profiles!: Profile[];
 
   @OneToMany(() => AccountStatus, (accountStatus) => accountStatus.user, { cascade: true })
   accountStatuses!: AccountStatus[];
@@ -57,6 +55,6 @@ export class User extends BaseEntity {
   @OneToMany(() => Payment, (payment) => payment.user, { cascade: true })
   payments!: Payment[];
 
-  @OneToMany(() => PqrHistorySummary, (pqrHistorySummary) => pqrHistorySummary.user, { cascade: true })
+  @OneToMany(() => PqrHistorySummary, (pqr) => pqr.user, { cascade: true })
   pqrHistorySummaries!: PqrHistorySummary[];
 }

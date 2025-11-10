@@ -1,19 +1,22 @@
-import { Entity, PrimaryGeneratedColumn, Column, BaseEntity, OneToMany, ManyToOne, JoinColumn, Decimal128 } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, BaseEntity, OneToMany } from 'typeorm';
 import { Property } from './Property';
 
-@Entity('realstate')
+@Entity('real_state')
 export class RealState extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
   id!: string;
 
   @Column({ type: 'varchar' })
-  hc!: number;
+  hc!: string;
 
   @Column({ type: 'varchar', length: 255 })
   name!: string;
 
   @Column({ type: 'varchar', length: 255, nullable: true })
-  typology!: string;
+  project_type!: string;
+
+  @Column({ type: 'varchar', length: 255, nullable: true })
+  status!: string;
 
   @Column({ type: 'varchar', length: 255, unique: true })
   slug!: string;
@@ -39,12 +42,6 @@ export class RealState extends BaseEntity {
   @Column({ type: 'varchar', length: 500, nullable: true })
   imagen_url?: string;
 
-  @ManyToOne(() => RealState, (realState) => realState.accountStatuses)
-  @JoinColumn({ name: 'real_state_id' })
-  realState!: RealState;
-  accountStatuses: any;
-
-   @ManyToOne(() => Property, (property: Property) => property.realstate)
-   @JoinColumn({ name: 'id' })
-   property!: Property
+  @OneToMany(() => Property, (property) => property.realstate, { cascade: true })
+  properties!: Property[];
 }

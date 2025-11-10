@@ -5,53 +5,56 @@ import { Property } from '../../entities/Property';
 export const createProperty = async (req: Request, res: Response): Promise<void> => {
   try {
     const {
-      id,
-      hc,
       name,
       typology,
-      address,
-      price_from_general,
+      price,
+      value_of_mandatory_kits,
+      unit_number,
+      parking_spaces,
       bathrooms,
       rooms,
       built_area,
       description,
-      imagen_url
+      imagen_url,
+      id_realstate,
     } = req.body;
-    
+
     if (
-      !id ||
-      !hc ||
       !name ||
       !typology ||
-      !address ||
-      !price_from_general ||
+      !price ||
+      !value_of_mandatory_kits ||
+      !unit_number ||
+      !parking_spaces ||
       !bathrooms ||
       !rooms ||
       !built_area ||
       !description ||
-      !imagen_url
+      !imagen_url ||
+      !id_realstate
     ) {
       res.status(400).json({ error: 'Bad request, missing data' });
       return;
     }
     const PropertyBody = await Property.findOne({
-      where: { hc: hc },
+      where: { name: name },
     });
 
     if (!PropertyBody) {
       const propertyRepository = AppDataSource.getRepository(Property);
       const proper = new Property();
-      proper.id = id;
-      proper.hc = hc;
       proper.name = name;
       proper.typology = typology;
-      proper.address = address;
-      proper.price_from_general = price_from_general;
+      proper.price = price;
+      proper.value_of_mandatory_kits = value_of_mandatory_kits;
+      proper.unit_number = unit_number;
+      proper.parking_spaces = parking_spaces;
       proper.bathrooms = bathrooms;
       proper.rooms = rooms;
       proper.built_area = built_area;
       proper.description = description;
       proper.imagen_url = imagen_url;
+      proper.realstate = id_realstate;
       const createProperty = await propertyRepository.save(proper);
       res.status(201).json({ id: createProperty.id });
       return;

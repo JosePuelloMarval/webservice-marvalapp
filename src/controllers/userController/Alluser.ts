@@ -24,7 +24,6 @@ export const allUsers = async (req: Request, res: Response): Promise<void> => {
       country: user.country,
       role: user.role?.role || null,
       accountStatus: user.accountStatuses || null,
-
     }));
 
     res.json(transformedUsers);

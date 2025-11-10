@@ -1,18 +1,18 @@
-import { Entity, PrimaryGeneratedColumn, Column, BaseEntity, OneToOne, JoinColumn } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, BaseEntity, ManyToOne, JoinColumn } from 'typeorm';
 import { User } from './User';
 
-@Entity('profile')
+@Entity('profiles')
 export class Profile extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
   id!: string;
 
-  @OneToOne(() => User, (user) => user.profile, { onDelete: 'CASCADE' })
+  @ManyToOne(() => User, (user) => user.profiles, { onDelete: 'CASCADE' })
   @JoinColumn({ name: 'user_id' })
   user!: User;
 
   @Column()
   log!: string;
 
-  @Column()
+  @Column({ type: 'timestamp' })
   date!: Date;
 }

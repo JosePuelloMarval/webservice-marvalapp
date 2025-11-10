@@ -1,6 +1,15 @@
-import { Entity, PrimaryGeneratedColumn, Column, BaseEntity, ManyToOne } from 'typeorm';
-import { Payment } from './Payment';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  BaseEntity,
+  ManyToOne,
+  OneToMany,
+  JoinColumn,
+} from 'typeorm';
 import { User } from './User';
+import { Payment } from './Payment';
+import { Property } from './Property';
 
 @Entity('account_status')
 export class AccountStatus extends BaseEntity {
@@ -8,7 +17,14 @@ export class AccountStatus extends BaseEntity {
   id!: string;
 
   @ManyToOne(() => User, (user) => user.accountStatuses, { onDelete: 'CASCADE' })
+  @JoinColumn({ name: 'user_id' })
   user!: User;
+
+  @OneToMany(() => Payment, (payment) => payment.accountStatus, { cascade: true })
+  payments!: Payment[];
+
+  @OneToMany(() => Property, (property) => property.accountStatus, { cascade: true })
+  properties!: Property[];
 
   @Column('decimal', { precision: 15, scale: 2 })
   totalAmount!: number;
@@ -69,6 +85,4 @@ export class AccountStatus extends BaseEntity {
 
   @Column({ type: 'date' })
   paymentDeadline!: Date;
-  payments: Payment | undefined;
-  realState: any;
 }

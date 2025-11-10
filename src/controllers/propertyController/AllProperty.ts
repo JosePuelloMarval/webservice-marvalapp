@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import { AppDataSource } from '../../db';
 import { Property } from '../../entities/Property';
 
-export const allProperty= async (req: Request, res: Response): Promise<void> => {
+export const allProperty = async (req: Request, res: Response): Promise<void> => {
   try {
     const property = await AppDataSource.getRepository(Property).find();
     if (property.length > 0) {

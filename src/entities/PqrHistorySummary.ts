@@ -15,7 +15,6 @@ export class PqrHistorySummary extends BaseEntity {
   @Column()
   status!: string;
 
-  // 👇 puedes dejarlo como bigint (UNIX timestamp) o usar Date
   @Column('bigint')
   timestamp!: number;
 

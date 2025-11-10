@@ -6,7 +6,6 @@ export const createAccountStatus = async (req: Request, res: Response): Promise<
   try {
     const {
       userId,
-      realStateId,
       totalAmount,
       initialOwnResources,
       initialSpecialResources,
@@ -31,7 +30,6 @@ export const createAccountStatus = async (req: Request, res: Response): Promise<
 
     if (
       !userId ||
-      !realStateId ||
       totalAmount == null ||
       initialOwnResources == null ||
       initialSpecialResources == null ||
@@ -57,23 +55,8 @@ export const createAccountStatus = async (req: Request, res: Response): Promise<
       return;
     }
 
-    // Verifica si ya existe para ese usuario e inmueble
-    const existing = await AppDataSource.getRepository(AccountStatus).findOne({
-      where: {
-
-      },
-    });
-
-    if (existing) {
-      res
-        .status(409)
-        .json({ message: 'Ya existe un estado de cuenta para este usuario y proyecto' });
-      return;
-    }
-
     const accountStatus = new AccountStatus();
     accountStatus.user = userId;
-    accountStatus.realState = realStateId;
     accountStatus.totalAmount = totalAmount;
     accountStatus.initialOwnResources = initialOwnResources;
     accountStatus.initialSpecialResources = initialSpecialResources;

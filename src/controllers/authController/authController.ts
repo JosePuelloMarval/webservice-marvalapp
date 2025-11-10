@@ -26,11 +26,9 @@ export const loginHandler = async (req: Request, res: Response): Promise<void> =
     }
 
     const user = await AppDataSource.getRepository(User).findOne({
-      where: { email }, 
-      relations: ["role"]
+      where: { email },
+      relations: ['role'],
     });
-
-    console.log(user, " aca user")
 
     if (!user || !user?.password) {
       res.status(400).json({ message: 'User not found' });
@@ -43,8 +41,6 @@ export const loginHandler = async (req: Request, res: Response): Promise<void> =
       return;
     }
 
-  
-  
     let accountStatus: AccountStatus | null = null;
 
     if (user.accountStatuses) {

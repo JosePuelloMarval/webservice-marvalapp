@@ -20,7 +20,7 @@ export class Payment extends BaseEntity {
   @JoinColumn({ name: 'account_status_id' })
   accountStatus!: AccountStatus;
 
-  @ManyToOne(() => User, (user) => user.payments, { eager: true })
+  @ManyToOne(() => User, (user) => user.payments)
   @JoinColumn({ name: 'user_id' })
   user!: User;
 
